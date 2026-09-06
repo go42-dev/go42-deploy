@@ -2,4 +2,6 @@
 
 Provision infrastructure, configure dependencies, and deploy the application.
 
-Example: [Local Kubernetes with Kind and ArgoCD](example/kind/README.md).
+## Examples
+
+[Local Kubernetes with Kind and ArgoCD](example/kind/README.md)
