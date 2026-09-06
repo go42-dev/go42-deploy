@@ -15,7 +15,7 @@ variable "cluster_node_image" {
 }
 
 variable "go42_source_sha" {
-  description = "Full Git commit SHA containing the Helm chart from the selected Go42 release. Update together with go42_image_digest."
+  description = "Full Git commit SHA containing the Helm chart from the selected Go42 release. Update together with go42_image_repository and go42_image_digest."
   type        = string
   nullable    = false
   validation {
@@ -24,8 +24,18 @@ variable "go42_source_sha" {
   }
 }
 
+variable "go42_image_repository" {
+  description = "Container registry and image path, without a URL scheme, tag, or digest; for example ghcr.io/hasansino/go42 or registry.example.com:5000/team/go42."
+  type        = string
+  nullable    = false
+  validation {
+    condition     = can(regex("^[^\\s/@:]+(:[0-9]+)?/[^\\s/@:]+(/[^\\s/@:]+)*$", var.go42_image_repository))
+    error_message = "go42_image_repository must include a registry host (optionally with a port) and image path, without whitespace, a URL scheme, tag, or digest."
+  }
+}
+
 variable "go42_image_digest" {
-  description = "Immutable multi-platform container image digest from the same release as go42_source_sha."
+  description = "Immutable multi-platform container image digest in go42_image_repository from the same release as go42_source_sha."
   type        = string
   nullable    = false
   validation {

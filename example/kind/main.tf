@@ -198,11 +198,10 @@ resource "kubernetes_manifest" "application" {
         targetRevision = var.go42_source_sha
         path           = "infra/helm/app"
         helm = {
-          # Inherit image.repository from the pinned chart, including releases
-          # published before the GitHub organization migration.
           values = yamlencode({
             image = {
-              digest = var.go42_image_digest
+              repository = var.go42_image_repository
+              digest     = var.go42_image_digest
             }
           })
         }
